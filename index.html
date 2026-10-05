@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hilos & Telas | Boutique de Costura</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧵</span>
+                <span class="logo-text">Hilos & Telas</span>
+            </div>
+
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#productos" class="nav-link">Productos</a></li>
+                    <li><a href="#categorias" class="nav-link">Categorías</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="cart-btn" id="cart-toggle">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Todo para tu costura, <br><span>en un solo lugar</span></h1>
+                <p>Encuentra hilos, telas, agujas, accesorios y repuestos para máquinas de coser con la mejor calidad y atención.</p>
+                <div class="hero-btns">
+                    <a href="#productos" class="btn btn-primary">Ver productos</a>
+                    <a href="javascript:void(0)" onclick="window.open('https://wa.me/503XXXXXXXX', '_blank')" class="btn btn-secondary">Consultar por WhatsApp</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1528578//photo-1528578-7768887c2d32?q=80&w=1000&auto=format&fit=crop" alt="Costura Profesional" onerror="this.src='https://via.placeholder.com/500x400?text=Costura+Boutique'">
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="categorias" class="categories">
+        <div class="container">
+            <h2 class="section-title">Nuestras Categorías</h2>
+            <div class="category-grid">
+                <div class="cat-card" onclick="filterByCategory('Hilos')">
+                    <div class="cat-icon">🧵</div>
+                    <h3>Hilos</h3>
+                </div>
+                <div class="cat-card" onclick="filterByCategory('Agujas')">
+                    <div class="cat-icon">🪡</div>
+                    <h3>Agujas</h3>
+                </div>
+                <div class="cat-card" onclick="filterByCategory('Telas')">
+                    <div class="cat-icon">🧶</div>
+                    <h3>Telas</h3>
+                </div>
+                <div class="cat-card" onclick="filterByCategory('Repuestos')">
+                    <div class="cat-icon">⚙️</div>
+                    <h3>Repuestos</h3>
+                </div>
+                <div class="cat-card" onclick="filterByCategory('Herramientas')">
+                    <div class="cat-icon">✂️</div>
+                    <h3>Herramientas</h3>
+                </div>
+                <div class="cat-card" onclick="filterByCategory('Accesorios')">
+                    <div class="cat-icon">🧰</div>
+                    <h3>Accesorios</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section id="productos" class="products">
+        <div class="container">
+            <h2 class="section-title">Catálogo de Productos</h2>
+
+            <!-- Search and Filter Bar -->
+            <div class="filter-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Buscar producto (ej. hilo, tela...)" onkeyup="handleSearch()">
+                </div>
+                <div class="filter-group">
+                    <select id="category-filter" onchange="handleFilter()">
+                        <option value="Todos">Todas las categorías</option>
+                        <option value="Hilos">Hilos</option>
+                        <option value="Telas">Telas</option>
+                        <option value="Agujas">Agujas</option>
+                        <option value="Repuestos">Repuestos</option>
+                        <option value="Herramientas">Herramientas</option>
+                        <option value="Accesorios">Accesorios</option>
+                    </select>
+                    <select id="sort-filter" onchange="handleFilter()">
+                        <option value="default">Ordenar por...</option>
+                        <option value="low-high">Precio: Menor a Mayor</option>
+                        <option value="high-low">Precio: Mayor a Menor</option>
+                        <option value="az">Nombre: A-Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="product-grid" class="product-grid">
+                <!-- Products injected by JS -->
+            </div>
+            <div id="no-results" class="no-results" style="display: none;">
+                <p>No encontramos productos que coincidan con tu búsqueda. 🧵</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Mi Carrito</h2>
+                <span class="close-modal" id="close-cart">&times;</span>
+            </div>
+            <div id="cart-items" class="cart-items">
+                <!-- Items injected by JS -->
+            </div>
+            <div class="cart-footer">
+                <div class="total-container">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button id="checkout-whatsapp" class="btn btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Realizar pedido por WhatsApp
+                </button>
+                <button id="clear-cart" class="btn btn-clear">Vaciar Carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT SECTION -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <p>+503 XXXXXXXX</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <h3>Horario de Atención</h3>
+                            <p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                            <p>Sábados: 9:00 AM - 1:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h3>Ubicación</h3>
+                            <p>Centro Comercial El Hilo, Local 12<br>San Salvador, El Salvador</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Mensaje enviado. Nos contactaremos contigo pronto.');">
+                        <input type="text" placeholder="Nombre" required>
+                        <input type="email" placeholder="Correo Electrónico" required>
+                        <textarea placeholder="¿En qué podemos ayudarte?" rows="4" required></textarea>
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <h3>Hilos & Telas</h3>
+                <p>Tu tienda de confianza para todo lo relacionado con el arte de la costura. Calidad y variedad en cada detalle.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#categorias">Categorías</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+                <a href="https://wa.me/503XXXXXXXX" class="whatsapp-footer-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Escríbenos
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Hilos & Telas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <button id="back-to-top" title="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
